@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="./template-web.js"></script>
+    <script type="text/html" id="tpl">
+          <h3>姓名：{{name}}</h3>
+            <p>年龄：{{age}}</p>
+            <dl>
+              <dt>爱看的书</dt>
+              {{each aihao}}
+                  <dd>{{$value}}</dd>
+              {{/each}}
+            </dl>
+            <div>{{deteformat(time)}}</div>
+            <div>{{@str}}</div>
+            {{if isLogin}}
+            退出
+            {{else}}
+            登陆
+            {{/if}}
+      </script>
+    <script>
+        function dateformat(str) {
+            var data = new Date(str);
+            var y = data.getFullYear()
+            var m = data.getMonth() + 1
+            var d = data.getDate()
+            return y + '年' + m + '月' + d + '日'
+        }
+        template.defaults.imports.deteformat = dateformat
+        var obj = {
+            name: '张三',
+            age: 20,
+            isLogin: true,//是否登录,如果登录值为true,否则为false?复习条件判断
+            aihao: ['三国演义', '西游记', '红楼梦', '水浒传'],//复习循环
+            str: '<h1>你好世界</h1>',//复习html转义
+            time: '2019-06-03?16:00:00.000'//复习导入变量
+        };
+
+        // template('模板的id值',数据(必须是一个对象))
+
+        var html = template('tpl', obj)
+        document.querySelector('#container').innerHTML = html 
+    </script>
+</body>
+
+</html>
